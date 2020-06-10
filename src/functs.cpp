@@ -1,4 +1,5 @@
 #include <sys/wait.h>
+#include <dirent.h> 
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -123,4 +124,46 @@ void createWorkers(workersDirList** listOfWorkers, int numWorkers) { //dimiourgi
         std::cout << "Worker " << i << " works with " << listOfWorkers[i]->childToParName << " << pipe " << std::endl;
     }
     std::cout << "All workers have work to do    " << std::endl;
+}
+
+int getCountries() {
+  DIR *d;
+  struct dirent *dir;
+  int countries = 0;
+  d = opendir("/mnt/c/Users/User/Documents/syspro3/dataset");
+  if (d) {
+    while ((dir = readdir(d)) != NULL ) {
+      if(strcmp(dir->d_name, ".")==0 || strcmp(dir->d_name, "..")==0)
+                continue;
+      countries++;
+      printf("%s\n", dir->d_name);
+    }
+    closedir(d);
+  }
+  // printf("%d\n", countries);
+  return(countries);
+  
+}
+// 5 χωρες - 3 workers: 5/3 = 2, το υπολοιπο ο λαστ
+
+void assignCountriesToWorkers(int numWorkers, int numCountries){
+  if (numWorkers > numCountries)
+    {//mia ston kathena}
+
+  int countriesPerWorker = numCountries / numWorkers;
+  int lastWorkerCountries = numCountries % numWorkers;
+  DIR *d;
+  struct dirent *dir;
+  int currentWorkerCountries = 0;
+  int currentWorker = 0;
+  while ((dir = readdir(d)) != NULL ) { 
+    currentWorkerCountries++;
+    //assign dir->d_name to this worker
+    if (currentWorkerCountries == countriesPerWorker) {
+      currentWorkerCountries = 0;
+      currentWorker++;
+    }
+  
+  }
+  
 }
