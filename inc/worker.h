@@ -1,6 +1,6 @@
 #ifndef WORKER_H
 #define WORKER_H
-#include "map.h"
+#include "Map.h"
 // #include "Trie.h"
 // #include "MaxMinCountRes.h"
 #include "../inc/functs.h"

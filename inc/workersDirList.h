@@ -19,9 +19,9 @@ public:
     char* childToParName;
     int childToParFD;
     pid_t pid;
-    int countries;
     int paths;
     int pathLength;
+    int countries;
     void assign(char * filePath);
     char* merge();
     bool hasCompletedCmdCommunication;
