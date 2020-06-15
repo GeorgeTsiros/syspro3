@@ -1,6 +1,6 @@
-#include "../inc/worker.h"
-#include "../inc/map.h"
 #include "../inc/functs.h"
+#include "../inc/map.h"
+#include "../inc/worker.h"
 #include "../inc/workersDirList.h"
 #include <cstdio>
 #include <cstdlib>
@@ -25,13 +25,14 @@ Map ** mapArray;
 Worker::Worker(int e2wfd, int w2efd, int workerNum) : e2wfd(e2wfd), w2efd(w2efd) {
     totalFiles = 0;
     successfulSearches=0;
-    struct stat st = {0};                   //https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
+    struct stat st = {0}; //https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
 
     char* charWorkerNum;
-    charWorkerNum = (char*) malloc(sizeof workerNum + 1);
+    charWorkerNum = (char*) malloc(sizeof workerNum + 1); //  https://stackoverflow.com/questions/37042323/c-error-when-allocating-dynamic-memory-for-linked-list-node
     sprintf(charWorkerNum, "%d", workerNum);
 
     char charPid[100];
+    //charPid = (char*) malloc(sizeof pid +1);              // https://stackoverflow.com/questions/37042323/c-error-when-allocating-dynamic-memory-for-linked-list-node
     sprintf(charPid, "%d", getpid());
 
     logDir = new char [strlen(" log/worker/ .txt  ") + strlen(charWorkerNum) + strlen(charPid) + 1]();
@@ -167,14 +168,25 @@ int Worker::countFiles(char* pch) {
     return counter;
 }
 
-
+// bool Worker::importData() {
+//     bool import = false;
+//     trie = new Trie();
+//     for (int i = 0; i < totalFiles; i++) {
+//         if (mapArray[i]->readFile()) { //diavasma tou arxeiou, prin to perasma twn keimenwn se enan pinaka ginetai elegxos gia lathi sto keimeno 
+//             trie->insertDoc(mapArray[i]);   //isagogi sto trie olwn twn leksewn apo ola ta maps
+//             //  mapArray[i]->print();
+//             import = true;
+//         }
+//     }
+//     return import;
+// }
 
 void Worker::start() {
-    cout << "worker " << getpid() << " starts " << endl;
+    cout << "worker " << getpid() << " ready " << endl;
 
     while (1) {
         char * payload = receiveData(e2wfd);
-
+        cout << "worker " << getpid() << " received data " << endl;
         char* str = new char [strlen(payload) + 1];
         strcpy(str, payload);
 
@@ -186,7 +198,6 @@ void Worker::start() {
 
         ofs << payload << endl;
 
-
         delete [] str;
         delete [] payload;
 
@@ -196,7 +207,6 @@ void Worker::start() {
     }
 
 }
-
 
 Map** Worker::getMapArray() {
     return mapArray;

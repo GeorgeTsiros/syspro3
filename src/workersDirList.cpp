@@ -1,10 +1,12 @@
+#include "../inc/functs.h"
+#include "../inc/map.h"
+#include "../inc/worker.h"
 #include "../inc/workersDirList.h"
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
 #include <iostream>
 
-//list from ex.1
 
 using namespace std;
 

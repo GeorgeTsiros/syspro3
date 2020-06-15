@@ -1,6 +1,8 @@
 #include <iostream>
-#include "../inc/map.h"
 #include "../inc/functs.h"
+#include "../inc/map.h"
+#include "../inc/worker.h"
+#include "../inc/workersDirList.h"
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
